@@ -7,6 +7,7 @@ function App() {
       <header className='App-header'>
         <img src={logo} className='App-logo' alt='logo' />
         <p>Added pre deploy</p>
+        <p>Testing if deployed from branch</p>
         <a
           className='App-link'
           href='https://reactjs.org'
