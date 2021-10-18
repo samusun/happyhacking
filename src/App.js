@@ -1,6 +1,6 @@
 import React from 'react';
 import Routing from './routing';
 
-const App = () => <Routing />;
+const App = () => <Routing className='mainBody' />;
 
 export default App;
