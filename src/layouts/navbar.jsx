@@ -6,7 +6,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 const Navbar = () => {
   return (
     <div className={s.container}>
-      <p>NFT Castle</p>
+      <h1>NFT Castle</h1>
       <NavDropdown title='Menu' menuVariant='dark' bg='dark'>
         <NavDropdown.Item>
           <Link to='./login'>Login</Link>
