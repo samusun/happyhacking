@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  border: solid black 1px;
+  margin: 30px;
+}
+
+.left {
+  width: 80vw;
+}
