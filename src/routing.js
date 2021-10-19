@@ -2,15 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './scss/main.scss';
 
-import {
-  HOME,
-  ABOUT,
-  PORTFOLIO,
-  LOGIN,
-  SIGNUP,
-  FORGOT,
-  PROFILE
-} from './routes';
+import { HOME, ABOUT, PORTFOLIO, LOGIN, FORGOT, PROFILE } from './routes';
 import Home from './pages/home';
 import About from './pages/about';
 import Portfolio from './pages/portfolio.jsx';
