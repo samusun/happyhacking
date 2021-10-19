@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 100px;
+}
+
+#HeroTitle {
+  max-width: 9ch;
+  font-size: 40px;
+  font-family: 'Special Elite', cursive;
+}
+
+#HeroDescription {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  max-width: 20ch;
+}
