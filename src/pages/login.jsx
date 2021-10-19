@@ -2,11 +2,12 @@ import React, { useRef, useState } from 'react';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
+import s from '../scss/pages/login.module.scss';
 
 function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { login, currentUser } = useAuth();
+  const { login } = useAuth();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -26,12 +27,10 @@ function Login() {
   }
 
   return (
-    <div>
-      <Card>
+    <div className={s.container}>
+      <Card style={{ width: '25rem' }}>
         <Card.Body>
           <h2 className='text-center mb-4'>Login</h2>
-          {currentUser && currentUser.email}
-
           {error && <Alert variant='danger'>{error}</Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group id='email'>
@@ -44,7 +43,12 @@ function Login() {
               <Form.Control type='password' ref={passwordRef} required />
             </Form.Group>
 
-            <Button disabled={loading} className='w-100 mt-2' type='submit'>
+            <Button
+              disabled={loading}
+              className='w-100 mt-2'
+              variant='dark'
+              type='submit'
+            >
               Submit
             </Button>
           </Form>

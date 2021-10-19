@@ -1,12 +1,12 @@
 import React from 'react';
-import Navbar from './navbar';
+import Nav from './navbar';
 import Footer from './footer';
 import { withRouter } from 'react-router-dom';
 
 const Layout = ({ children }) => {
   return (
     <>
-      <Navbar />
+      <Nav />
       <main className='main-content'>{children}</main>
       <Footer />
     </>

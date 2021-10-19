@@ -2,12 +2,13 @@ import React, { useRef, useState } from 'react';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
+import s from '../scss/pages/login.module.scss';
 
 function Signup() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
-  const { signUp, currentUser } = useAuth();
+  const { signUp } = useAuth();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -31,13 +32,10 @@ function Signup() {
   }
 
   return (
-    <div>
-      <h1>SIGNUP HERE</h1>
-      <Card>
+    <div className={s.container}>
+      <Card style={{ width: '25rem' }}>
         <Card.Body>
           <h2 className='text-center mb-4'>Sign up</h2>
-          {currentUser && currentUser.email}
-
           {error && <Alert variant='danger'>{error}</Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group id='email'>
@@ -54,7 +52,12 @@ function Signup() {
               <Form.Label>Password confirmation</Form.Label>
               <Form.Control type='password' ref={passwordConfirmRef} required />
             </Form.Group>
-            <Button disabled={loading} className='w-100 mt-2' type='submit'>
+            <Button
+              disabled={loading}
+              className='w-100 mt-2'
+              variant='dark'
+              type='submit'
+            >
               Submit
             </Button>
           </Form>
