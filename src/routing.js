@@ -20,6 +20,7 @@ import Signup from './pages/signup';
 import ForgotPassword from './pages/forgotPassword';
 import { AuthProvider } from './context/AuthContext';
 import Profile from './pages/profile';
+import Marketplace from './pages/marketplace';
 
 const Routing = () => {
   return (
@@ -31,9 +32,10 @@ const Routing = () => {
             <Route exact path={ABOUT} component={About} />
             <Route exact path={PORTFOLIO} component={Portfolio} />
             <Route exact path={LOGIN} component={Login} />
-            <Route exact path={SIGNUP} component={Signup} />
+            <Route path='/signup/:myParams' component={Signup} />
             <Route exact path={FORGOT} component={ForgotPassword} />
             <Route exact path={PROFILE} component={Profile} />
+            <Route path='/marketplace/:someParams' component={Marketplace} />
           </Layout>
         </Switch>
       </AuthProvider>

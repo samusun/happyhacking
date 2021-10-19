@@ -1,7 +1,8 @@
-.container {
+.HeroContainer {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 60vh;
   margin: 100px;
 }
 
@@ -12,6 +13,10 @@
 }
 
 #HeroDescription {
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   max-width: 20ch;
+  margin-bottom: 100px;
+}
+
+#link {
+  color: white;
 }

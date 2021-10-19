@@ -1,10 +1,12 @@
 import React, { useRef, useState } from 'react';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import s from '../scss/pages/login.module.scss';
 
 function Signup() {
+  let show = false;
+  const { myParams } = useParams();
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
@@ -12,6 +14,11 @@ function Signup() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const history = useHistory();
+
+  if (myParams === 'getStarted') {
+    show = true;
+  }
+  console.log(show, myParams);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -33,6 +40,7 @@ function Signup() {
 
   return (
     <div className={s.container}>
+      {show && <h3> Create a user to start collecting your art</h3>}
       <Card style={{ width: '25rem' }}>
         <Card.Body>
           <h2 className='text-center mb-4'>Sign up</h2>
