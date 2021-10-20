@@ -1,9 +1,11 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import Products from './../components/products';
 
 export default function Marketplace() {
-  const { someParams } = useParams();
-  console.log(someParams);
-
-  return <div>This is Marketplace</div>;
+  return (
+    <div>
+      <h1>This is marketplace</h1>
+      <Products />
+    </div>
+  );
 }

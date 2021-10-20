@@ -2,7 +2,15 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './scss/main.scss';
 
-import { HOME, ABOUT, PORTFOLIO, LOGIN, FORGOT, PROFILE } from './routes';
+import {
+  HOME,
+  ABOUT,
+  PORTFOLIO,
+  LOGIN,
+  FORGOT,
+  PROFILE,
+  UPLOAD
+} from './routes';
 import Home from './pages/home';
 import About from './pages/about';
 import Portfolio from './pages/portfolio.jsx';
@@ -13,6 +21,8 @@ import ForgotPassword from './pages/forgotPassword';
 import { AuthProvider } from './context/AuthContext';
 import Profile from './pages/profile';
 import Marketplace from './pages/marketplace';
+import Product from './pages/product';
+import Upload from './pages/upload';
 
 const Routing = () => {
   return (
@@ -27,7 +37,9 @@ const Routing = () => {
             <Route path='/signup/:myParams' component={Signup} />
             <Route exact path={FORGOT} component={ForgotPassword} />
             <Route exact path={PROFILE} component={Profile} />
-            <Route path='/marketplace/:someParams' component={Marketplace} />
+            <Route exact path='/marketplace' component={Marketplace} />
+            <Route path='/marketplace/:someParams' component={Product} />
+            <Route exact path={UPLOAD} component={Upload} />
           </Layout>
         </Switch>
       </AuthProvider>
