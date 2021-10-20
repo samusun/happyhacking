@@ -21,7 +21,7 @@ export default function Home() {
           </p>
           <Button variant='dark'>
             <Link to={startCollecting} id={s.link}>
-              Start collecting
+              Start Collecting
             </Link>
           </Button>
         </div>
