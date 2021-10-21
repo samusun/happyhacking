@@ -9,7 +9,8 @@ import {
   LOGIN,
   FORGOT,
   PROFILE,
-  UPLOAD
+  UPLOAD,
+  SIGNUP
 } from './routes';
 import Home from './pages/home';
 import About from './pages/about';
@@ -34,7 +35,7 @@ const Routing = () => {
             <Route exact path={ABOUT} component={About} />
             <Route exact path={PORTFOLIO} component={Portfolio} />
             <Route exact path={LOGIN} component={Login} />
-            <Route path='/signup/:myParams' component={Signup} />
+            <Route exact path={SIGNUP} component={Signup} />
             <Route exact path={FORGOT} component={ForgotPassword} />
             <Route exact path={PROFILE} component={Profile} />
             <Route exact path='/marketplace' component={Marketplace} />
