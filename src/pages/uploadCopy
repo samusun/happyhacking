@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Form, Button, ProgressBar, Image } from 'react-bootstrap';
 import { db, storage } from '../firebase';
+import { doc, setDoc } from 'firebase/firestore';
 import s from '../scss/pages/upload.module.scss';
 import { useAuth } from './../context/AuthContext';
 
 function Upload() {
-  const storageRef = storage.ref();
   const { currentUser } = useAuth();
   const [image, setImage] = useState(null);
-  const [fbUrl, setFbUrl] = useState(null);
+  const [imageName, setImageName] = useState(null);
   const [url, setUrl] = useState('');
   const [progress, setProgress] = useState(0);
 
@@ -21,7 +21,9 @@ function Upload() {
   };
 
   const handleUpload = () => {
-    const uploadTask = storage.ref(`uploads/${image.name}`).put(image);
+    const uploadTask = storage
+      .ref(`${currentUser.email}/${image.name}`)
+      .put(image);
     uploadTask.on(
       'state_changed',
       (snapshot) => {
@@ -32,51 +34,39 @@ function Upload() {
       },
       (error) => {
         console.log(error);
+      },
+      () => {
+        storage
+          .ref('images')
+          .child(image.name)
+          .getDownloadURL()
+          .then((url) => {
+            setUrl(url);
+            console.log(url);
+          });
       }
     );
   };
 
-  function getUrl() {
-    storageRef
-      .child(`uploads/${image.name}`)
-      .getDownloadURL()
-      .then((theUrl) => {
-        setFbUrl(theUrl);
-        console.log(fbUrl);
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log('this is e.target:  ', e.target);
+    handleUpload();
+    db.collection('art')
+      .doc()
+      .set({
+        artist: currentUser.email,
+        name: e.target[1].value,
+        description: e.target[2].value,
+        price: e.target[3].value,
+        id: image.name
+      })
+      .then(() => {
+        console.log('Document successfully written!');
       })
       .catch((error) => {
-        console.log(error);
+        console.error('Error writing document: ', error);
       });
-  }
-
-  function handleSubmit(e) {
-    console.log('in handle submit: ', e);
-    e.preventDefault();
-    handleUpload();
-    setTimeout(function () {
-      getUrl();
-    }, 4000);
-
-    setTimeout(function () {
-      console.log(fbUrl);
-      console.log('starting doc upload');
-      db.collection('art')
-        .doc()
-        .set({
-          artist: currentUser.email,
-          name: e.target[1].value,
-          description: e.target[2].value,
-          price: e.target[3].value,
-          url: fbUrl,
-          imgName: image.name
-        })
-        .then(() => {
-          console.log('Document successfully written!');
-        })
-        .catch((error) => {
-          console.error('Error writing document: ', error);
-        });
-    }, 4500);
   }
 
   return (
