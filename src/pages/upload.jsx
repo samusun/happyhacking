@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Form, Button, ProgressBar, Image } from 'react-bootstrap';
 import { db, storage } from '../firebase';
 import s from '../scss/pages/upload.module.scss';
@@ -81,42 +82,60 @@ function Upload() {
 
   return (
     <div className={s.container}>
-      <h1>Upload your creativity</h1>
+      {currentUser ? (
+        <>
+          <h1>Upload your creativity</h1>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className='mb-3' controlId='image'>
+              <Form.Control type='file' onChange={handleChange} required />
+              <Image
+                src={url || 'http://via.placeholder.com/300'}
+                alt='firebase'
+                thumbnail
+              />
 
-      <Form onSubmit={handleSubmit}>
-        <Form.Group className='mb-3' controlId='image'>
-          <Form.Control type='file' onChange={handleChange} required />
-          <Image
-            src={url || 'http://via.placeholder.com/300'}
-            alt='firebase'
-            thumbnail
-          />
+              <ProgressBar now={progress} />
+              {currentUser.email && (
+                <Form.Label>Artist: {currentUser.email}</Form.Label>
+              )}
+            </Form.Group>
 
-          <ProgressBar now={progress} />
-          {currentUser.email && (
-            <Form.Label>Artist: {currentUser.email}</Form.Label>
-          )}
-        </Form.Group>
+            <Form.Group className='mb-3' controlId='name'>
+              <Form.Label>Name of your creation</Form.Label>
+              <Form.Control type='text' required />
+            </Form.Group>
 
-        <Form.Group className='mb-3' controlId='name'>
-          <Form.Label>Name of your creation</Form.Label>
-          <Form.Control type='text' required />
-        </Form.Group>
+            <Form.Group className='mb-3' controlId='description'>
+              <Form.Label>Description</Form.Label>
+              <Form.Control as='textarea' rows={3} required />
+            </Form.Group>
 
-        <Form.Group className='mb-3' controlId='description'>
-          <Form.Label>Description</Form.Label>
-          <Form.Control as='textarea' rows={3} required />
-        </Form.Group>
+            <Form.Group className='mb-3' controlId='price'>
+              <Form.Label>Price in $</Form.Label>
+              <Form.Control type='number' placeholder='$' required />
+            </Form.Group>
 
-        <Form.Group className='mb-3' controlId='price'>
-          <Form.Label>Price in $</Form.Label>
-          <Form.Control type='number' placeholder='$' required />
-        </Form.Group>
-
-        <Button variant='dark' type='submit'>
-          Submit
-        </Button>
-      </Form>
+            <Button variant='dark' type='submit'>
+              Submit
+            </Button>
+          </Form>
+        </>
+      ) : (
+        <>
+          <h1> Your are not logged in</h1>
+          <div className='w-100 text-center mt-2'>
+            To upload your creativity you can choose to
+            <Link to='/login'>
+              {' '}
+              <b> Login here, </b>
+            </Link>
+            or{' '}
+            <Link to='/signup'>
+              <b> Signup here </b>
+            </Link>
+          </div>
+        </>
+      )}
     </div>
   );
 }

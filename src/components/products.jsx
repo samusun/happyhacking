@@ -8,45 +8,57 @@ export default function Products() {
   const storageRef = storage.ref();
   const [data, setData] = useState([]);
   const [imgData, setImgData] = useState([]);
-
+  const [loaded, setLoaded] = useState(false);
   let newArr = [];
+
+  console.log(loaded);
+  useEffect(() => {
+    getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function getData() {
     db.collection('art')
       .get()
       .then((snapshot) => {
         setData(snapshot.docs);
-        console.log('Data received', data);
-        for (let i = 0; i < data.length; i++) {
-          console.log('forloop is running');
-          storageRef
-            .child(`uploads/${data[i].data().imgName}`)
-            .getDownloadURL()
-            .then((url) => {
-              newArr.push(url);
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        }
-        setImgData(newArr);
-        console.log(imgData);
-        finish();
+        console.log('in get data', data);
+        setLoaded(true);
       });
   }
 
-  function finish() {
+  setTimeout(function () {
+    if (loaded) {
+      getImgUrl();
+    }
+  }, 3000);
+
+  function getImgUrl() {
+    for (let i = 0; i < data.length || setAllData(); i++) {
+      console.log('forloop is running');
+      storageRef
+        .child(`uploads/${data[i].data().imgName}`)
+        .getDownloadURL()
+        .then((url) => {
+          newArr.push(url);
+          console.log(url);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    setLoaded(false);
+  }
+
+  function setAllData() {
+    setImgData(newArr);
+    console.log('img data', imgData);
     let allArr = data;
     for (let i = 0; i < data.length; i++) {
       allArr[i].imgUrl = imgData[i];
     }
     setData(allArr);
-    console.log(data);
   }
-
-  useEffect(() => {
-    getData();
-  }, []);
 
   return (
     <div className={s.container}>
@@ -56,8 +68,8 @@ export default function Products() {
           <Card.Body>
             <Card.Title>{item.data().name}</Card.Title>
             <Card.Text>
-              <p> By: {item.data().artist} </p>
-              <p> Price: {item.data().price} </p>
+              By: {item.data().artist}
+              Price: {item.data().price}
             </Card.Text>
             <Link to={`marketplace/${item.id}`}>
               <Button variant='dark'>Go to product</Button>
