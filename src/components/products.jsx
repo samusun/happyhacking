@@ -9,44 +9,50 @@ export default function Products() {
   const [data, setData] = useState([]);
   const [imgData, setImgData] = useState([]);
 
-  useEffect(() => {
-    let newArr = [];
-    function getData() {
-      db.collection('art')
-        .get()
-        .then((snapshot) => {
-          setData(snapshot.docs);
-        });
-    }
-    getData();
+  let newArr = [];
 
-    for (let i = 0; i < data.length; i++) {
-      console.log('forloop is running');
-      storageRef
-        .child(`uploads/${data[i].data().imgId}`)
-        .getDownloadURL()
-        .then((url) => {
-          newArr.push(url);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-    setImgData(newArr);
-    console.log(imgData);
+  function getData() {
+    db.collection('art')
+      .get()
+      .then((snapshot) => {
+        setData(snapshot.docs);
+        console.log('Data received', data);
+        for (let i = 0; i < data.length; i++) {
+          console.log('forloop is running');
+          storageRef
+            .child(`uploads/${data[i].data().imgName}`)
+            .getDownloadURL()
+            .then((url) => {
+              newArr.push(url);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+        setImgData(newArr);
+        console.log(imgData);
+        finish();
+      });
+  }
+
+  function finish() {
     let allArr = data;
     for (let i = 0; i < data.length; i++) {
       allArr[i].imgUrl = imgData[i];
     }
     setData(allArr);
     console.log(data);
+  }
+
+  useEffect(() => {
+    getData();
   }, []);
 
   return (
     <div className={s.container}>
       {data.map((item) => (
         <Card key={item.id} style={{ width: '18rem' }}>
-          <Card.Img variant='top' src={item.data().url} />
+          <Card.Img variant='top' src={item.imgUrl} />
           <Card.Body>
             <Card.Title>{item.data().name}</Card.Title>
             <Card.Text>
