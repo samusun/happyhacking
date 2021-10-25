@@ -3,3 +3,13 @@
   flex-wrap: wrap;
   justify-content: space-around;
 }
+
+.cardContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.imageContainer {
+  height: 10rem;
+}

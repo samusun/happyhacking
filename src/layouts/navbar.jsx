@@ -21,16 +21,20 @@ const Nav = () => {
         <Navbar variant='dark'>
           <NavDropdown id='nav-dropdown' title='Menu'>
             <NavDropdown.Item>
-              <Link to='./profile'>Profile</Link>
+              <Link to='/profile'>Profile</Link>
             </NavDropdown.Item>
-            <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
+            <NavDropdown.Item>
+              <Link to='/marketplace'>Marketplace</Link>
+            </NavDropdown.Item>
+            <NavDropdown.Item>
+              <Link to='/upload'>Upload</Link>
+            </NavDropdown.Item>
+
             <NavDropdown.Divider />
             <NavDropdown.Item>
-              <Link to='./marketplace'>Marketplace</Link>
+              <Link to='/about'>About</Link>
             </NavDropdown.Item>
-            <NavDropdown.Item>
-              <Link to='./about'>About</Link>
-            </NavDropdown.Item>
+            <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
           </NavDropdown>
         </Navbar>
       ) : (

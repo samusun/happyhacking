@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { db, storage } from '../firebase';
-import { Card, Button } from 'react-bootstrap';
+import { Card, Button, Spinner } from 'react-bootstrap';
 import s from '../scss/components/products.module.scss';
 
 export default function Products() {
@@ -13,6 +13,8 @@ export default function Products() {
 
   console.log(loaded);
   useEffect(() => {
+    setData([]);
+    setImgData([]);
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -40,8 +42,8 @@ export default function Products() {
         .child(`uploads/${data[i].data().imgName}`)
         .getDownloadURL()
         .then((url) => {
-          newArr.push(url);
-          console.log(url);
+          newArr[i] = url;
+          console.log(newArr);
         })
         .catch((error) => {
           console.log(error);
@@ -63,8 +65,18 @@ export default function Products() {
   return (
     <div className={s.container}>
       {data.map((item) => (
-        <Card key={item.id} style={{ width: '18rem' }}>
-          <Card.Img variant='top' src={item.imgUrl} />
+        <Card
+          key={item.id}
+          style={{ width: '18rem' }}
+          className={s.cardContainer}
+        >
+          <div className={s.imageContainer}>
+            {item.imgUrl ? (
+              <Card.Img variant='top' src={item.imgUrl} />
+            ) : (
+              <Spinner animation='border' role='status' />
+            )}
+          </div>
           <Card.Body>
             <Card.Title>{item.data().name}</Card.Title>
             <Card.Text>
