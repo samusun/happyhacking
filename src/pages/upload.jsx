@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Button, ProgressBar, Image } from 'react-bootstrap';
 import { db, storage } from '../firebase';
@@ -6,6 +6,8 @@ import s from '../scss/pages/upload.module.scss';
 import { useAuth } from './../context/AuthContext';
 
 function Upload() {
+  const formRef = useRef(null);
+  const [uploadMsg, setUploadMsg] = useState(null);
   const storageRef = storage.ref();
   const { currentUser } = useAuth();
   const [image, setImage] = useState(null);
@@ -13,7 +15,12 @@ function Upload() {
   const [url, setUrl] = useState('');
   const [progress, setProgress] = useState(0);
 
+  const today = new Date();
+  const date =
+    today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+
   const handleChange = (e) => {
+    setUploadMsg(null);
     console.log(e.target.files[0]);
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
@@ -69,27 +76,35 @@ function Upload() {
           description: e.target[2].value,
           price: e.target[3].value,
           url: fbUrl,
-          imgName: image.name
+          imgName: image.name,
+          date: date
         })
         .then(() => {
           console.log('Document successfully written!');
+          setUploadMsg('Upload complete, check it out in Marketplace');
+          formRef.current.reset();
         })
         .catch((error) => {
           console.error('Error writing document: ', error);
+          setUploadMsg('Something went wrong, check the console');
         });
     }, 4500);
   }
 
   return (
     <div className={s.container}>
+      <h1>Upload your creativity</h1>
+      <p>{uploadMsg} </p>
       {currentUser ? (
-        <>
-          <h1>Upload your creativity</h1>
-          <Form onSubmit={handleSubmit}>
+        <div className={s.myForm}>
+          <Form ref={formRef} onSubmit={handleSubmit}>
             <Form.Group className='mb-3' controlId='image'>
               <Form.Control type='file' onChange={handleChange} required />
               <Image
-                src={url || 'http://via.placeholder.com/300'}
+                src={
+                  url ||
+                  'https://via.placeholder.com/400/000000/FFFFFF/?text=BeCreative'
+                }
                 alt='firebase'
                 thumbnail
               />
@@ -119,7 +134,7 @@ function Upload() {
               Submit
             </Button>
           </Form>
-        </>
+        </div>
       ) : (
         <>
           <h1> Your are not logged in</h1>
