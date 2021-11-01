@@ -11,7 +11,6 @@ export default function Products() {
   const [loaded, setLoaded] = useState(false);
   let newArr = [];
 
-  console.log(loaded);
   useEffect(() => {
     setData([]);
     setImgData([]);
@@ -35,15 +34,34 @@ export default function Products() {
     }
   }, 3000);
 
+  /*
   function getImgUrl() {
+    storageRef
+      .child(`uploads/`)
+      .listAll()
+      .then(function (result) {
+        console.log(result);
+        result.items.forEach(async function (imgRef) {
+          let result = await imgRef.getDownloadURL();
+          newArr.push(result);
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    setLoaded(false);
+    setAllData();
+  }
+
+  */
+
+  async function getImgUrl() {
     for (let i = 0; i < data.length || setAllData(); i++) {
-      console.log('forloop is running');
       storageRef
         .child(`uploads/${data[i].data().imgName}`)
         .getDownloadURL()
         .then((url) => {
           newArr[i] = url;
-          console.log(newArr);
         })
         .catch((error) => {
           console.log(error);
@@ -54,7 +72,6 @@ export default function Products() {
 
   function setAllData() {
     setImgData(newArr);
-    console.log('img data', imgData);
     let allArr = data;
     for (let i = 0; i < data.length; i++) {
       allArr[i].imgUrl = imgData[i];
@@ -72,7 +89,7 @@ export default function Products() {
         >
           <div className={s.imageContainer}>
             {item.imgUrl ? (
-              <Card.Img variant='top' src={item.imgUrl} />
+              <Card.Img variant='top' height='100%' src={item.imgUrl} />
             ) : (
               <Spinner animation='border' role='status' />
             )}
@@ -81,7 +98,8 @@ export default function Products() {
             <Card.Title>{item.data().name}</Card.Title>
             <Card.Text>
               By: {item.data().artist}
-              Price: {item.data().price}
+              <br />
+              {item.data().price}$
             </Card.Text>
             <Link to={`marketplace/${item.id}`}>
               <Button variant='dark'>Go to product</Button>

@@ -5,24 +5,21 @@ const footer = () => {
   return (
     <div className={s.container}>
       <div className={s.text}>
-        <h5>The future of art collecting</h5>
+        <h5>This is a school project</h5>
         <p>
-          Browse and build your collection of the world’s most cutting-edge
-          digital art
+          {' '}
+          I'm learning some technologies that seems to be useful for the future.
         </p>
       </div>
       <div className={s.text}>
-        <h5>Pioneering art market royalties</h5>
-        <p>
-          Artists receive continuous royalties for all secondary sales on their
-          artworks – forever
-        </p>
+        <h5>Firebase Authentication, Storage and Firestore is used</h5>
+        <p>Thanks to Google i don't need my own server for this</p>
       </div>
       <div className={s.text}>
-        <h5>Built for longevity</h5>
+        <h5>Just for fun</h5>
         <p>
-          All transactions happen on-chain, creating a tamper-proof record of
-          each artwork’s history
+          If you have any questions, please don't hesitate to contact me at
+          Samuelsinkorg@gmail.com
         </p>
       </div>
     </div>
