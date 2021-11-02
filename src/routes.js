@@ -6,3 +6,4 @@ export const SIGNUP = '/signup';
 export const FORGOT = '/forgotpassword';
 export const PROFILE = '/profile';
 export const UPLOAD = '/upload';
+export const MARKETPLACE = '/marketplace';
